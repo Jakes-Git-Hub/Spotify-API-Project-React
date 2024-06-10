@@ -12,6 +12,20 @@ export class SearchBar extends React.Component {
     this.handleTermChange = this.handleTermChange.bind(this);
   }
 
+  componentDidMount() {
+    const searchTerm = localStorage.getItem('searchTerm');
+    if (searchTerm) {
+      this.setState({ term: searchTerm }, () => {
+        this.handleTermChange({ target: { value: searchTerm } });
+      });
+      localStorage.removeItem('searchTerm');
+    } else {
+      this.setState({ term: 'Enter A Song, Album or Artist' }, () => {
+        this.handleTermChange({ target: { value: 'Enter A Song, Album or Artist' } });
+      });
+    }
+  }
+
   handleTermChange(event) {
     this.setState({term: event.target.value}, () => {
       this.search();
@@ -27,7 +41,9 @@ export class SearchBar extends React.Component {
     return (
       <div className="SearchBar">
         <input placeholder="Enter A Song, Album or Artist"
-               onChange={this.handleTermChange} />
+          onChange={this.handleTermChange}
+          value={this.state.term} 
+        />
         <button className="SearchButton" onClick={this.search}>SEARCH</button>
       </div>
     );

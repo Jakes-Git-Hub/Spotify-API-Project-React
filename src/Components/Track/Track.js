@@ -49,9 +49,15 @@ export class Track extends React.Component {
           :
           <button className="Track-action" onClick={this.addTrack}>+</button>
         }
-        <button className="Track-preview" onClick={this.playPreview}>
-          {this.state.isPlaying ? 'Pause' : 'Preview'}
-        </button>
+        {this.props.track.preview_url === null ?
+          (
+            null
+          ) : (
+            <button className="Track-preview" onClick={this.playPreview}>
+              {this.state.isPlaying && this.props.track.preview_url ? 'Pause' : this.state.isPlaying ? 'Preview-unavailable' : 'Preview'}
+            </button>
+          )
+        }
         {this.state.isPlaying && this.props.track.preview_url &&
           <ReactPlayer url={this.props.track.preview_url} playing />
         }
