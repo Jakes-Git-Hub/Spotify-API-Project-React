@@ -1,5 +1,5 @@
 const clientId = '995a9298fb8045e388119e54b245b1f9';
-const redirectUri = 'http://1234jammming-123.surge.sh';
+const redirectUri = 'https://1122jammming-12323.surge.sh';
 
 let accessToken;
 
@@ -9,14 +9,12 @@ export const Spotify = {
             return accessToken;
         } 
 
-        // check for access token match
         const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
         const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
 
         if(accessTokenMatch && expiresInMatch) {
             accessToken = accessTokenMatch[1];
             const expiresIn = Number(expiresInMatch[1]);
-            // This clears the parameters, allowing us to grab a new access token when it expires.
             window.setTimeout(() => accessToken = '', expiresIn * 1000);
             window.history.pushState('Access Token', null, '/');
             return accessToken;
